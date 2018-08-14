@@ -1,11 +1,9 @@
 import 'isomorphic-fetch'
 import React from 'react'
-import { connect } from 'react-redux'
-
 import NavBar from '../components/NavBar';
 
 class Abstract extends React.Component {
-	static async getInitialProps({ store }) {
+	static async getInitialProps() {
 
 	}
 
@@ -16,4 +14,4 @@ class Abstract extends React.Component {
 	}
 }
 
-export default connect()(Abstract)
+export default Abstract;

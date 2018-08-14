@@ -8,7 +8,6 @@ export default class NavBar extends React.Component {
 			<nav className="flex justify-between bb b--white-10 bg-near-black">
 				<Link href="/">
 					<a
-						alt="ADS Lite"
 						className="link white-70 hover-white no-underline flex items-center pa3"
 					>ADS Lite</a>
 				</Link>

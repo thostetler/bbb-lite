@@ -18,10 +18,9 @@ export default class MyDocument extends Document {
 						href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css"/>
 					<title>ADS Lite</title>
 				</Head>
-				<body className="w-100 avenir">
+				<body className="w-100 helvetica">
 					<Main />
 					<NextScript />
-					<script defer src="https://code.getmdl.io/1.3.0/material.min.js" />
 				</body>
 			</html>
 		)

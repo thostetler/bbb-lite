@@ -1,6 +1,6 @@
 import { createStore, compose, applyMiddleware } from 'redux'
 
-import rootReducer from '../reducers'
+import rootReducer from '../reducer'
 
 const enhancers = compose(
 	typeof window !== 'undefined' && process.env.NODE_ENV !== 'production'

@@ -1,7 +1,8 @@
 const path = require('path')
 const WorkboxPlugin = require('workbox-webpack-plugin')
+const withTypescript = require('@zeit/next-typescript');
 
-module.exports = {
+module.exports = withTypescript({
 	webpack: (config, { buildId, dev }) => {
 		const oldEntry = config.entry
 
@@ -30,4 +31,4 @@ module.exports = {
 
 		return config
 	}
-}
+});

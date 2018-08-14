@@ -1,27 +1,25 @@
-import 'isomorphic-fetch'
 import React from 'react'
-import { connect } from 'react-redux'
 import Layout from '../components/Layout';
 import SearchBar from '../components/SearchBar';
 
-const content = () => (
+const content = (props) => (
 	<section className="center pa-2 w-80 mt5">
-		<SearchBar />
+		{props.q}
 	</section>
 )
 
 class Index extends React.Component {
-	static async getInitialProps({ store }) {
+	static async getInitialProps() {
 
 	}
 
 	render() {
+		const props = this.props;
+		console.log('props', this.props);
 		return (
-			<Layout
-				content={content()}
-			/>
+			<Layout content={content(props)} />
 		)
 	}
 }
 
-export default connect()(Index)
+export default Index;
