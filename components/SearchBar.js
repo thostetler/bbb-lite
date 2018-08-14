@@ -1,21 +1,20 @@
 import React from 'react';
 
-type Props = {
-  onSubmit(val: string): void
-};
+export default class SearchBar extends React.Component {
 
-export default class SearchBar extends React.Component<Props, any> {
+  constructor(props) {
+    super(props);
+    this.indexEl = document.createElement();
+  }
 
-  private input: HTMLInputElement;
-
-  private onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  onSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     this.props.onSubmit(data.get('q').toString());
   }
 
   componentDidMount() {
-    this.input.focus();
+    this.indexEl.focus();
   }
 
 	render() {
@@ -26,7 +25,7 @@ export default class SearchBar extends React.Component<Props, any> {
 						type="text"
 						placeholder="Search For Articles"
             name="q"
-            ref={el => (this.input = el)}
+            ref={el => (this.indexEl = el)}
 						className="f6 f5-l input-reset bn fl black-80 bg-white pa3 w-100 w-75-m w-80-l br2-ns br--left-ns"
 					/>
 					<input

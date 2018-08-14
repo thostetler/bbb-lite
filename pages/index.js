@@ -17,7 +17,7 @@ class Index extends React.Component {
     };
   }
 
-  private onSearch(query) {
+  onSearch(query) {
     console.log(this);
     console.log(query);
   }
