@@ -11,15 +11,18 @@ const Content = ({ onSubmit }) => (
 
 class Index extends React.Component {
 	static async getInitialProps(store) {
-    console.log((typeof store.getState === 'function') ? store.getState() : {});
-    return {
-      // bibcode: store.getState().main.bibcode
-    };
+    const state = (typeof store.getState === 'function') ? store.getState() : {};
+    return state;
+  }
+
+  constructor(props) {
+    super(props);
+    this.onSearch = this.onSearch.bind(this);
   }
 
   onSearch(query) {
-    console.log(this);
-    console.log(query);
+    const { dispatch } = this.props;
+    dispatch({ type: 'RECEIVED_QUERY', payload: query });
   }
 
 	render() {

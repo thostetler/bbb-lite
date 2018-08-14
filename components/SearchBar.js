@@ -4,7 +4,7 @@ export default class SearchBar extends React.Component {
 
   constructor(props) {
     super(props);
-    this.indexEl = document.createElement();
+    this.indexEl = <></>;
   }
 
   onSubmit = (event) => {
