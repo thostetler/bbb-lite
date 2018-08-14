@@ -1,15 +1,32 @@
 import React from 'react';
 
-export default class SearchBar extends React.Component {
+type Props = {
+  onSubmit(val: string): void
+};
+
+export default class SearchBar extends React.Component<Props, any> {
+
+  private input: HTMLInputElement;
+
+  private onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    this.props.onSubmit(data.get('q').toString());
+  }
+
+  componentDidMount() {
+    this.input.focus();
+  }
 
 	render() {
 		return (
-			<form action="/search">
+			<form onSubmit={this.onSubmit}>
 				<div className="cf">
 					<input
 						type="text"
 						placeholder="Search For Articles"
-						name="q"
+            name="q"
+            ref={el => (this.input = el)}
 						className="f6 f5-l input-reset bn fl black-80 bg-white pa3 w-100 w-75-m w-80-l br2-ns br--left-ns"
 					/>
 					<input

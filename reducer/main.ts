@@ -1,12 +1,12 @@
 const initialState = {
-	value: 0
+	bibcode: ''
 }
 
-const mainReducer = (state = initialState, action) => {
+const main = (state = initialState, action) => {
 	switch (action.type) {
 		default:
 			return state;
 	}
 }
 
-export default mainReducer;
+export default main;
