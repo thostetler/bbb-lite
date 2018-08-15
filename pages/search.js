@@ -1,10 +1,24 @@
 import React from 'react'
 import Layout from '../components/Layout';
 import SearchBar from '../components/SearchBar';
+import { Link } from '../utils/routes';
 
-const content = ({ q }) => (
+const content = ({ docs }) => (
 	<section className="center pa-2 w-80 mt5">
-		{q}
+		<div className="pa3 pa5-ns">
+			<ul className="list pl0 measure center">
+				{docs && docs.length && docs.map(doc =>
+					<li
+						key={doc.bibcode}
+						className="lh-copy pv3 ba bl-0 bt-0 br-0 b--dotted b--black-30"
+					>
+						<Link route="abstract" params={{ bibcode: doc.bibcode }} prefetch>
+							<a>{ doc.title }</a>
+						</Link>
+					</li>
+				)}
+			</ul>
+		</div>
 	</section>
 )
 
@@ -18,7 +32,7 @@ class Search extends React.Component {
         }
       });
       const response = await data.json();
-      return response.response.docs;
+      return { docs: response.response.docs };
     } catch (e) {
       return {};
     }
