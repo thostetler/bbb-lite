@@ -1,10 +1,14 @@
 import React from 'react';
-import Link from 'next/link';
+import { connect } from 'react-redux';
 
-const Footer = () => (
+const Footer = ({ bibcode }) => (
 	<footer className="pv4 ph3 ph5-m ph6-l mid-gray bt b-near-black tc">
-		FOOTER
+		Searching for <strong>{bibcode}</strong>
 	</footer>
 )
 
-export default Footer;
+const mapStateToProps = (state) => ({
+	bibcode: state.main.bibcode
+});
+
+export default connect(mapStateToProps)(Footer);

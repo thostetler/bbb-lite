@@ -22,7 +22,14 @@ class Index extends React.Component {
 
   onSearch(query) {
     const { dispatch } = this.props;
-    dispatch({ type: 'RECEIVED_QUERY', payload: query });
+		dispatch({ type: 'RECEIVED_QUERY', payload: query });
+		dispatch({
+			type: 'ROUTE',
+			payload: {
+				route: '/search',
+				query: { q: query }
+			}
+		});
   }
 
 	render() {

@@ -4,10 +4,18 @@ export default class SearchBar extends React.Component {
 
   constructor(props) {
     super(props);
-    this.indexEl = <></>;
-  }
+		this.indexEl = <div></div>;
+		this.onKeyUp = this.onKeyUp.bind(this);
+		this.onSubmit = this.onSubmit.bind(this);
+	}
 
-  onSubmit = (event) => {
+	onKeyUp(event) {
+		if (event.which === 13) {
+			this.onSubmit(event);
+		}
+	}
+
+  onSubmit(event) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     this.props.onSubmit(data.get('q').toString());
