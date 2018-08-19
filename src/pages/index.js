@@ -22,14 +22,11 @@ class Index extends React.Component {
 
   onSearch(query) {
     const { dispatch } = this.props;
-		dispatch({ type: 'RECEIVED_QUERY', payload: query });
-		dispatch({
-			type: 'ROUTE',
-			payload: {
-				route: '/search',
-				query: { q: query }
-			}
-		});
+		dispatch({ type: 'QUERY', payload: { query }});
+		dispatch({ type: 'ROUTE', payload: {
+      route: '/search',
+      query: { q: query }
+    }});
   }
 
 	render() {
@@ -43,7 +40,7 @@ class Index extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  bibcode: state.main.bibcode
+  query: state.main.query
 });
 
 export default connect(mapStateToProps)(Index);
