@@ -1,3 +1,4 @@
+import { throttle } from 'lodash';
 const NS = 'ADS-lite#';
 
 export const set = (name, value) => {
@@ -25,6 +26,6 @@ export const loadState = () => {
   return get('app-state');
 }
 
-export const saveState = (state) => {
+export const saveState = throttle((state) => {
   return set('app-state', state);
-}
+}, 1000);

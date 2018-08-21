@@ -1,6 +1,6 @@
 import { createStore, compose, applyMiddleware } from 'redux';
 import { throttle } from 'lodash';
-import { loadState, saveState } from '../src/services/localStorage';
+import { saveState } from '../src/services/localStorage';
 import rootReducer from '../src/reducer';
 import rootMiddleware from '../src/middleware';
 
@@ -12,12 +12,5 @@ const enhancers = compose(
 
 const createStoreWithMiddleware = applyMiddleware(...rootMiddleware)(createStore)
 
-export default () => {
-  const store = createStoreWithMiddleware(rootReducer, loadState(), enhancers);
-  store.subscribe(throttle(() => {
-    saveState({
-      main: store.getState().main
-    });
-  }, 1000));
-  return store;
-}
+export default initialState =>
+  createStoreWithMiddleware(rootReducer, initialState, enhancers);

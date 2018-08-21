@@ -25,7 +25,7 @@ class Index extends React.Component {
 		dispatch({ type: 'QUERY', payload: { query }});
 		dispatch({ type: 'ROUTE', payload: {
       route: '/search',
-      query: { q: query }
+      // query: { q: query }
     }});
   }
 

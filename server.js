@@ -21,7 +21,12 @@ app.prepare().then(_ => {
 		changeOrigin: true
 	}));
 
-	server.get('*', (req, res) => handle(req, res));
+  server.get('/abstract/:bibcode', (req, res) => {
+    const { bibcode } = req.params;
+    app.render(req, res, `/abstract`, { bibcode })
+  });
+
+  server.get('*', (req, res) => handle(req, res));
 
   graphqlServer.applyMiddleware({
     app: server,

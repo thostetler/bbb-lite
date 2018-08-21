@@ -1,17 +1,20 @@
 const initialState = {
   docs: [],
+  numFound: 0,
   query: {
     query: '',
     rows: 10,
     start: 0
   },
   loading: false,
-  page: {
+  pageInfo: {
     currentPage: 0,
     hasNextPage: true,
     hasPreviousPage: false,
     totalPages: 1
-  }
+  },
+  doc: {},
+  docLoading: false
 }
 
 const main = (state = initialState, action) => {
@@ -23,10 +26,18 @@ const main = (state = initialState, action) => {
         ...state.query,
         ...action.payload
       }};
+    case 'TOTAL_DOCS':
+      return { ...state, numFound: action.payload };
     case 'PAGINATION':
       return { ...state, pageInfo: action.payload };
     case 'DOCS_LOADING':
       return { ...state, loading: action.payload };
+    case 'DOC_LOADING':
+      return { ...state, docLoading: action.payload };
+    case 'DOC_RECEIVED':
+      return { ...state, doc: action.payload };
+    case 'UPDATE_STATE':
+      return { ...action.payload.main };
 		default:
 			return state;
 	}

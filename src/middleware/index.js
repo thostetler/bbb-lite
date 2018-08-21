@@ -1,5 +1,6 @@
 import { Router } from '../../utils/routes';
 import qs from 'query-string';
+import { saveState } from '../services/localStorage';
 import doSearch from '../services/request';
 
 // transition to a new route
@@ -16,7 +17,50 @@ const route = ({ dispatch }) => next => (action) => {
 
 const query = ({ dispatch, getState }) => next => async action => {
   next(action);
-  if (action.type === 'QUERY') {
+
+  if (action.type === 'QUERY' && typeof action.payload === 'string') {
+
+    dispatch({ type: 'DOC_LOADING', payload: true });
+    const response = await doSearch({
+      query: `query($q: String!) {
+        search(q: $q, rows: 1) {
+          docs {
+            abstract
+            affiliations
+            authors
+            bibcode
+            citationCount
+            citations {
+              numReferences
+              numCitations
+            }
+            documentType
+            doi
+            esources
+            id
+            page
+            publication {
+              name
+            }
+            publicationDate {
+              day
+              month
+              year
+            }
+            title
+            volume
+          }
+        }
+      }`,
+      variables: {
+        q: `bibcode:${action.payload}`
+      }
+    });
+    const json = await response.json();
+    dispatch({ type: 'DOC_LOADING', payload: false });
+    dispatch({ type: 'DOC_RECEIVED', payload: json.data.search.docs[0] });
+
+  } else if (action.type === 'QUERY') {
     dispatch({ type: 'DOCS_LOADING', payload: true });
     const payload = {
       ...getState().main.query,
@@ -27,6 +71,7 @@ const query = ({ dispatch, getState }) => next => async action => {
     const response = await doSearch({
       query: `query($q: String!, $rows: Int, $start: Int) {
         search(q: $q, rows: $rows, start: $start) {
+          numFound
           pageInfo {
             totalPages
             currentPage
@@ -51,10 +96,17 @@ const query = ({ dispatch, getState }) => next => async action => {
     dispatch({ type: 'DOCS_LOADING', payload: false });
     dispatch({ type: 'DOCS_RECIEVED', payload: json.data.search.docs });
     dispatch({ type: 'PAGINATION', payload: json.data.search.pageInfo });
+    dispatch({ type: 'TOTAL_DOCS', payload: json.data.search.numFound });
   }
+};
+
+const storage = ({ dispatch, getState }) => next => action => {
+  next(action);
+  saveState({ main: getState().main });
 };
 
 export default [
   route,
-  query
+  query,
+  storage
 ];

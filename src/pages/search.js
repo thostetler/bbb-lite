@@ -21,12 +21,12 @@ class Search extends React.Component {
   }
 
 	render() {
-    const { docs, pageInfo, loading } = this.props;
+    const { docs, pageInfo, loading, numFound } = this.props;
 		return (
 			<Layout content={(
         <section className="center pa-2 w-80 mt5">
           <SearchBar onSubmit={this.onSearch} />
-          <Results docs={docs} loading={loading} pageInfo={pageInfo} />
+          <Results docs={docs} loading={loading} pageInfo={pageInfo} numFound={numFound} />
         </section>
       )} />
 		)
@@ -36,7 +36,8 @@ class Search extends React.Component {
 const mapStateToProps = (state) => ({
   docs: state.main.docs,
   loading: state.main.loading,
-  pageInfo: state.main.pageInfo
+  pageInfo: state.main.pageInfo,
+  numFound: state.main.numFound
 });
 
 export default connect(mapStateToProps)(Search);

@@ -1,6 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-export default class SearchBar extends React.Component {
+class SearchBar extends React.Component {
 
   constructor(props) {
     super(props);
@@ -26,6 +27,7 @@ export default class SearchBar extends React.Component {
   }
 
 	render() {
+    console.log('search props', this.props);
 		return (
 			<form onSubmit={this.onSubmit}>
 				<div className="cf">
@@ -34,6 +36,7 @@ export default class SearchBar extends React.Component {
 						placeholder="Search For Articles"
             name="q"
             ref={el => (this.indexEl = el)}
+            value={this.props.query.q}
 						className="f6 f5-l input-reset bn fl black-80 bg-white pa3 w-100 w-75-m w-80-l br2-ns br--left-ns"
 					/>
 					<input
@@ -46,3 +49,9 @@ export default class SearchBar extends React.Component {
 		);
 	}
 }
+
+const mapStateToProps = (state) => ({
+  query: state.main.query
+});
+
+export default connect(mapStateToProps)(SearchBar);
