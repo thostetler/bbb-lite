@@ -2,6 +2,7 @@ import { Router } from '../../utils/routes';
 import qs from 'query-string';
 import { saveState } from '../services/localStorage';
 import doSearch from '../services/request';
+import { omit } from 'lodash';
 
 // transition to a new route
 const route = ({ dispatch }) => next => (action) => {
@@ -20,10 +21,11 @@ const query = ({ dispatch, getState }) => next => async action => {
 
   if (action.type === 'QUERY') {
     dispatch({ type: 'DOCS_LOADING', payload: true });
-    const payload = {
+    let payload = {
       ...getState().main.query,
       ...action.payload
     }
+
     console.log('payload', payload);
     const { query, rows, start } = payload;
     const response = await doSearch({

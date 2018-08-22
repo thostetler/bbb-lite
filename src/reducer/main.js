@@ -37,7 +37,7 @@ const main = (state = initialState, action) => {
     case 'DOC_RECEIVED':
       return { ...state, doc: action.payload };
     case 'UPDATE_STATE':
-      return { ...action.payload.main };
+      return { ...(action.payload ? action.payload.main : state) };
 		default:
 			return state;
 	}
