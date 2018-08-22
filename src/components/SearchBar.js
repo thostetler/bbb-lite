@@ -27,7 +27,7 @@ class SearchBar extends React.Component {
   }
 
 	render() {
-    console.log('search props', this.props);
+    console.log('search bar', this.props);
 		return (
 			<form onSubmit={this.onSubmit}>
 				<div className="cf">
@@ -36,7 +36,7 @@ class SearchBar extends React.Component {
 						placeholder="Search For Articles"
             name="q"
             ref={el => (this.indexEl = el)}
-            value={this.props.query.q}
+            initialvalue={this.props.query.q}
 						className="f6 f5-l input-reset bn fl black-80 bg-white pa3 w-100 w-75-m w-80-l br2-ns br--left-ns"
 					/>
 					<input

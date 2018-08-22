@@ -41,9 +41,9 @@ const validateToken = (token) => {
 }
 
 const doSearch = async (query, options) => {
-  const { req } = options;
+  const { req } = options || {};
   if (req) {
-    delete options.req;
+    options = { ...options, req: undefined };
   }
 
   let response;

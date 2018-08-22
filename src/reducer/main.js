@@ -2,7 +2,7 @@ const initialState = {
   docs: [],
   numFound: 0,
   query: {
-    query: '',
+    q: '',
     rows: 10,
     start: 0
   },
