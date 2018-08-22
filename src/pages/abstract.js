@@ -25,13 +25,25 @@ const Content = ({ doc }) => {
 }
 
 class Abstract extends React.Component {
-  static async getInitialProps({ query, store }) {
+  static async getInitialProps({ req, query, store }) {
     console.log('abstract page', query);
     const { bibcode } = query;
-    store.dispatch({ type: 'QUERY', payload: bibcode });
+
+    return new Promise((resolve, reject) => {
+      const callback = (json) => {
+        resolve(json);
+      }
+
+      store.dispatch({ type: 'QUERY_SINGLE', payload: {
+        req, bibcode, callback
+      }});
+    }).then((data) => {
+      console.log('got back', data);
+    });
 	}
 
 	render() {
+    console.log(this.props);
 		return (
       <Layout content={
         <Content doc={this.props.doc} />

@@ -1,7 +1,7 @@
 import { throttle } from 'lodash';
 const NS = 'ADS-lite#';
 
-export const set = (name, value) => {
+export const setStorageItem = (name, value) => {
   try {
     const item = JSON.stringify(value);
     localStorage.setItem(NS + name, item);
@@ -10,7 +10,7 @@ export const set = (name, value) => {
   }
 }
 
-export const get = (name) => {
+export const getStorageItem = (name) => {
   try {
     const item = localStorage.getItem(NS + name);
     if (item === null) {
@@ -23,9 +23,9 @@ export const get = (name) => {
 }
 
 export const loadState = () => {
-  return get('app-state');
+  return getStorageItem('app-state');
 }
 
 export const saveState = throttle((state) => {
-  return set('app-state', state);
+  return setStorageItem('app-state', state);
 }, 1000);

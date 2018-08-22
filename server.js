@@ -8,7 +8,8 @@ const resolvers = require('./graphql/resolvers');
 const typeDefs = require('./graphql/schema');
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dir: path.resolve(__dirname, './src'), dev })
-const handle = Router.getRequestHandler(app)
+const handle = Router.getRequestHandler(app);
+const fetch = require('isomorphic-fetch');
 
 const PORT = process.env.PORT || 8000
 
@@ -21,9 +22,9 @@ app.prepare().then(_ => {
 		changeOrigin: true
 	}));
 
-  server.get('/abstract/:bibcode', (req, res) => {
+  server.get('/abstract/:bibcode', async (req, res) => {
     const { bibcode } = req.params;
-    app.render(req, res, `/abstract`, { bibcode })
+    app.render(req, res, `/abstract`, { bibcode });
   });
 
   server.get('*', (req, res) => handle(req, res));

@@ -1,16 +1,22 @@
 import 'isomorphic-fetch';
+import { setStorageItem, getStorageItem } from '../services/localStorage';
 const API = '/api';
 
-const getToken = async () => {
-  const token = JSON.parse(localStorage.getItem('ADS-lite#token'));
-  console.log(token);
+const getURL = (req) => {
+  const baseURL = req ? `${req.protocol}://${req.get('Host')}` : '';
+  return baseURL + API;
+}
+
+const getToken = async (req) => {
+  const token = getStorageItem('token');
+  console.log('got token: ', token);
   if (token && validateToken(token)) {
     return token.accessToken;
   }
 
   let response, json;
   try {
-    response = await fetch(API, {
+    response = await fetch(getURL(req), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -25,7 +31,7 @@ const getToken = async () => {
     console.error(e);
   }
   const tokenData = json.data.createToken;
-  localStorage.setItem('ADS-lite#token', JSON.stringify(tokenData));
+  setStorageItem('token', tokenData);
   return tokenData.accessToken;
 }
 
@@ -35,6 +41,11 @@ const validateToken = (token) => {
 }
 
 const doSearch = async (query, options) => {
+  const { req } = options;
+  if (req) {
+    delete options.req;
+  }
+
   let response;
   const body = {
     ...query,
@@ -43,12 +54,12 @@ const doSearch = async (query, options) => {
       .replace('search(', 'search(token: $token, '),
     variables: {
       ...query.variables,
-      token: await getToken()
+      token: await getToken(req)
     }
   };
   console.log(body);
   try {
-    response = await fetch(API, {
+    response = await fetch(getURL(req), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
